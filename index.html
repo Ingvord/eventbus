@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test EventBus in Browser</title>
+    <script src="./dist/eventbus.js" type="module"></script>
+    <script type="module">
+        import {EventBus} from "./dist/eventbus.js";
+
+        const bus = new EventBus();
+
+        const listener = new class Handler {
+            constructor() {
+                bus.subscribe("test", this)
+            }
+
+            sayHello() {
+                console.log("Hello!!!")
+            }
+
+            "test subscription"(event) {
+                this.sayHello();
+            }
+        }
+
+        bus.subscribe("test", (event) => {
+            throw new Error("Ouch!")
+        })
+
+        bus.subscribe("test", (event) => {
+            console.log(event.data)
+        })
+
+
+        console.log(bus._callbacks.size)
+
+
+        setInterval(() => {
+            bus.publish("test", {
+                data: "Hello!"
+            })
+        }, 3000)
+
+        setTimeout(() => {
+            bus.unsubscribe("test", listener)
+            console.log(bus._callbacks.size)
+        }, 10000)
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "name": "eventbus",
+  "version": "0.0.1",
+  "description": "Simple EventBus implementation for JS SPA",
+  "source": "src/eventbus.js",
+  "module": "dist/eventbus.js",
+  "scripts": {
+    "build": "microbundle src/eventbus.js -f es,umd",
+    "dev": "microbundle watch -f es,umd",
+    "test": "jest ./test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ingvord/eventbus.git"
+  },
+  "keywords": [
+    "pubsub",
+    "publisher",
+    "subscriber",
+    "eventbus",
+    "bus",
+    "event"
+  ],
+  "author": "Ingvord",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Ingvord/eventbus/issues"
+  },
+  "homepage": "https://github.com/Ingvord/eventbus#readme",
+  "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.7.4",
+    "jest": "^24.9.0",
+    "microbundle": "^0.11.0"
+  }
+}
