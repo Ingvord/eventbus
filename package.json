@@ -2,6 +2,7 @@
   "name": "eventbus",
   "version": "0.0.2",
   "description": "Simple EventBus implementation for JS SPA",
+  "main": "dist/eventbus.js",
   "source": "src/eventbus.js",
   "module": "dist/eventbus.js",
   "scripts": {
