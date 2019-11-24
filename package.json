@@ -1,6 +1,6 @@
 {
   "name": "eventbus",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Simple EventBus implementation for JS SPA",
   "source": "src/eventbus.js",
   "module": "dist/eventbus.js",
@@ -31,5 +31,8 @@
     "@babel/plugin-transform-modules-commonjs": "^7.7.4",
     "jest": "^24.9.0",
     "microbundle": "^0.11.0"
+  },
+  "publishConfig": {
+    "registry": "https://api.bintray.com/npm/ingvord/npm"
   }
 }
