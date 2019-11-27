@@ -6,7 +6,7 @@
   "source": "src/eventbus.js",
   "module": "dist/eventbus.js",
   "scripts": {
-    "deploy": "curl -T $npm_package_main -uingvord:${API_KEY} https://api.bintray.com/content/waltz-controls/libs/eventbus/$npm_package_version/eventbus.js",
+    "deploy": "curl -T $npm_package_main -H \"Authorization:Basic ${BINTRAY_AUTH_TOKEN}\" https://api.bintray.com/content/waltz-controls/libs/eventbus/$npm_package_version/eventbus/$npm_package_version/eventbus.js",
     "build": "microbundle src/eventbus.js -f es",
     "dev": "microbundle watch -f es",
     "test": "jest ./test"
