@@ -1,6 +1,6 @@
 {
   "name": "eventbus",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple EventBus implementation for JS SPA",
   "main": "dist/eventbus.js",
   "source": "src/eventbus.js",
