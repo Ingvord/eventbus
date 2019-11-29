@@ -1,6 +1,6 @@
 import {EventBus} from "../src/eventbus.js";
 
-test('EventBus.subscribe by function', (done) => {
+it('EventBus.subscribe by function', (done) => {
     const bus = new EventBus();
 
     bus.subscribe("test1", (event) => {
@@ -14,11 +14,11 @@ test('EventBus.subscribe by function', (done) => {
     })
 });
 
-test('EventBus.subscribe by object', (done) => {
+it('EventBus.subscribe by object', (done) => {
     const bus = new EventBus();
 
     const subscriber = new class {
-        "test1 subscribe"(event) {
+        "test1 subscription"(event) {
             expect(event.data).toBe('peanut butter');
             done();
         }

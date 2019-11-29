@@ -1,8 +1,27 @@
 const kSubscriptionKeyWord = "subscription";
 
+const kBroadcast = new EventTarget();
+
+class ChannelsMap extends Map{
+    constructor(){
+        super();
+    }
+
+    get(id){
+        return this.has(id) ?
+            super.get(id):
+            this.set(id, new EventTarget()).get(id);
+    }
+}
+
+const kBroadcastChannel = "broadcast";
+const kChannelsMap = new ChannelsMap();
+
+kChannelsMap.set(kBroadcastChannel, kBroadcast);
+
 export class EventBus {
     constructor() {
-        this._target = new EventTarget();
+        this._channels = kChannelsMap;
         this._callbacks = new Map();
     }
 
@@ -10,29 +29,36 @@ export class EventBus {
      *
      * @param {string} event
      * @param {function|object} cb
+     * @param {string} channel
      */
-    subscribe(event, cb) {
+    subscribe(event, cb, channel = kBroadcastChannel) {
         console.debug(typeof cb);
         if (typeof cb == 'function') {
             const handler = (msg) => {
                 cb(msg.detail)
             };
-            this._target.addEventListener(event, handler);
+            this._channels.get(channel).addEventListener(event, handler);
             this._callbacks.set(cb, handler);
         } else if (typeof cb == 'object') {
             const handler = cb[`${event} ${kSubscriptionKeyWord}`];
             if (handler === undefined)
                 throw new Error(`Callback object has no method handler for ${event}. Please define a method called "${event} ${kSubscriptionKeyWord}"`);
             const handlerClosure = handler.bind(cb);
-            this._target.addEventListener(event, handlerClosure);
+            this._channels.get(channel).addEventListener(event, handlerClosure);
             this._callbacks.set(cb, handlerClosure);
         } else {
             throw new Error(`Unsupported callback type ${typeof cb}. Must be either function or object`);
         }
     }
 
-    publish(event, msg) {
-        this._target.dispatchEvent(new CustomEvent(event, {
+    /**
+     *
+     * @param {string} event
+     * @param {*} msg
+     * @param {string} channel
+     */
+    publish(event, msg, channel = kBroadcastChannel) {
+        this._channels.get(channel).dispatchEvent(new CustomEvent(event, {
             detail: msg
         }));
     }
@@ -42,11 +68,12 @@ export class EventBus {
      *
      * @param {string} event
      * @param {function|object} cb
+     * @param {string} channel
      */
-    unsubscribe(event, cb) {
+    unsubscribe(event, cb, channel = kBroadcastChannel) {
         const handler = this._callbacks.get(cb);
         if (handler === undefined) return;
-        this._target.removeEventListener(event, handler);
+        this._channels.get(channel).removeEventListener(event, handler);
         this._callbacks.delete(cb);
     }
 }
