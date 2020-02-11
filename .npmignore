@@ -1,5 +1,6 @@
 .idea
 src
 test
+dist
 index.html
 index.js

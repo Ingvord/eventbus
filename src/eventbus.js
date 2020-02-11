@@ -2,6 +2,10 @@ const kSubscriptionKeyWord = "subscription";
 
 const kBroadcast = new EventTarget();
 
+/**
+ * Channels map String->EventTarget
+ *
+ */
 class ChannelsMap extends Map{
     constructor(){
         super();
@@ -14,6 +18,11 @@ class ChannelsMap extends Map{
     }
 }
 
+/**
+ * Default channel
+ *
+ * @type {string}
+ */
 const kBroadcastChannel = "broadcast";
 const kChannelsMap = new ChannelsMap();
 
