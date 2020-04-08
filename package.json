@@ -1,6 +1,6 @@
 {
   "name": "@waltz-controls/eventbus",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Simple EventBus implementation for JS SPA",
   "main": "dist/index.js",
   "source": "src/eventbus.js",

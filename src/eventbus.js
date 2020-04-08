@@ -50,7 +50,9 @@ export class EventBus {
             const handler = cb[`${event} ${kSubscriptionKeyWord}`];
             if (handler === undefined)
                 throw new Error(`Callback object has no method handler for ${event}. Please define a method called "${event} ${kSubscriptionKeyWord}"`);
-            const handlerClosure = handler.bind(cb);
+            const handlerClosure = (msg) => {
+                handler.call(cb, msg.detail);
+            };
             this._channels.get(channel).addEventListener(event, handlerClosure);
             this._callbacks.set(cb, handlerClosure);
         } else {

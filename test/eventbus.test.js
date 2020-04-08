@@ -19,7 +19,7 @@ it('EventBus.subscribe by object', (done) => {
 
     const subscriber = new class {
         "test1 subscription"(event) {
-            chai.expect(event.detail.data).to.equal('peanut butter');
+            chai.expect(event.data).to.equal('peanut butter');
             done();
         }
     }
