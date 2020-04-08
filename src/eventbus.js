@@ -24,13 +24,11 @@ class ChannelsMap extends Map{
  * @type {string}
  */
 const kBroadcastChannel = "broadcast";
-const kChannelsMap = new ChannelsMap();
-
-kChannelsMap.set(kBroadcastChannel, kBroadcast);
 
 export class EventBus {
     constructor() {
-        this._channels = kChannelsMap;
+        this._channels = new ChannelsMap();
+        this._channels.set(kBroadcastChannel, kBroadcast);
         this._callbacks = new Map();
     }
 

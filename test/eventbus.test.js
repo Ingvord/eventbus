@@ -1,17 +1,17 @@
-import {EventBus} from "../src/eventbus.js";
+import {EventBus} from "../dist/index.esm.js";
 
 it('EventBus.subscribe by function', (done) => {
     const bus = new EventBus();
 
     bus.subscribe("test1", (event) => {
-        expect(event.data).toBe('peanut butter');
+        chai.expect(event.data).to.equal('peanut butter');
         done();
-    })
+    }, "test")
 
 
     bus.publish("test1", {
         data: "peanut butter"
-    })
+    }, "test")
 });
 
 it('EventBus.subscribe by object', (done) => {
@@ -19,15 +19,15 @@ it('EventBus.subscribe by object', (done) => {
 
     const subscriber = new class {
         "test1 subscription"(event) {
-            expect(event.data).toBe('peanut butter');
+            chai.expect(event.detail.data).to.equal('peanut butter');
             done();
         }
     }
 
-    bus.subscribe("test1", subscriber);
+    bus.subscribe("test1", subscriber, "test");
 
 
     bus.publish("test1", {
         data: "peanut butter"
-    })
+    }, "test")
 });

@@ -1,19 +1,17 @@
 {
-  "name": "eventbus",
+  "name": "@waltz-controls/eventbus",
   "version": "1.2.0",
   "description": "Simple EventBus implementation for JS SPA",
   "main": "dist/index.js",
   "source": "src/eventbus.js",
+  "module": "dist/index.esm.js",
   "watch": {
     "build": "{src,test}/*.js"
   },
   "scripts": {
     "clean": "rm -rf dist",
-    "package": "node ./maven-deploy.config.js",
-    "deploy": "curl -T $npm_package_main -H \"Authorization:Basic ${BINTRAY_AUTH_TOKEN}\" https://api.bintray.com/content/waltz-controls/libs/eventbus/$npm_package_version/eventbus/$npm_package_version/index.js",
-    "build": "mkdir -p dist && cp src/eventbus.js dist/index.js",
-    "watch": "npm-watch",
-    "test": "jest ./test"
+    "build": "rollup -c",
+    "watch": "rollup -c -w"
   },
   "repository": {
     "type": "git",
@@ -36,11 +34,14 @@
   "devDependencies": {
     "acorn": "^7.1.0",
     "maven-deploy": "^1.5.0",
-    "mocha": "^6.2.2",
-    "npm-watch": "^0.6.0"
+    "npm-watch": "^0.6.0",
+    "rollup": "^2.3.4"
   },
   "publishConfig": {
     "registry": "https://api.bintray.com/npm/waltz-controls/npm"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.1"
+  }
 }
