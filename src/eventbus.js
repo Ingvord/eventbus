@@ -1,10 +1,30 @@
+/** @module Constants */
+/**
+ * @name
+ * @desc Key word
+ * @type {string}
+ * @memberof Constants
+ */
 const kSubscriptionKeyWord = "subscription";
 
+/**
+ * @name
+ * @desc Default event target channel. Constant.
+ * @memberof Constants
+ */
 const kBroadcast = new EventTarget();
 
 /**
- * Channels map String->EventTarget
- *
+ * @name
+ * @desc Name of the default event channel. Constant.
+ * @type {string}
+ * @memberof Constants
+ */
+const kBroadcastChannel = "broadcast";
+
+/**
+ * @name
+ * @desc ChannelsMap maps String (id) -> EventTarget (event target channel).
  */
 class ChannelsMap extends Map{
     constructor(){
@@ -19,13 +39,14 @@ class ChannelsMap extends Map{
 }
 
 /**
- * Default channel
- *
- * @type {string}
+ * @name
+ * @desc
  */
-const kBroadcastChannel = "broadcast";
-
 export class EventBus {
+    /**
+     *  @name
+     *  @desc Creates channels and callbacks
+     */
     constructor() {
         this._channels = new ChannelsMap();
         this._channels.set(kBroadcastChannel, kBroadcast);
@@ -33,7 +54,7 @@ export class EventBus {
     }
 
     /**
-     *
+     * @name
      * @param {string} event
      * @param {function|object} cb
      * @param {string} channel
@@ -61,7 +82,7 @@ export class EventBus {
     }
 
     /**
-     *
+     * @name
      * @param {string} event
      * @param {*} msg
      * @param {string} channel
@@ -73,8 +94,8 @@ export class EventBus {
     }
 
     /**
-     * Does nothing if provided cb is not registered
-     *
+     * @name
+     * @desc Does nothing if provided cb is not registered
      * @param {string} event
      * @param {function|object} cb
      * @param {string} channel
