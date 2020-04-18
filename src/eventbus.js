@@ -15,16 +15,8 @@ const kSubscriptionKeyWord = "subscription";
 const kBroadcast = new EventTarget();
 
 /**
- * @name
- * @desc Name of the default event channel. Constant.
- * @type {string}
- * @memberof Constants
- */
-const kBroadcastChannel = "broadcast";
-
-/**
- * @name
- * @desc ChannelsMap maps String (id) -> EventTarget (event target channel).
+ * Channels map String->EventTarget
+ *
  */
 class ChannelsMap extends Map{
     constructor(){
@@ -41,6 +33,11 @@ class ChannelsMap extends Map{
 /**
  * @name
  * @desc
+ */
+const kBroadcastChannel = "channel:broadcast";
+
+/**
+ * @class [EventBus]
  */
 export class EventBus {
     /**
@@ -79,6 +76,16 @@ export class EventBus {
         } else {
             throw new Error(`Unsupported callback type ${typeof cb}. Must be either function or object`);
         }
+    }
+
+    /**
+     *
+     * @param {string} topic
+     * @param {string} channel
+     * @return {Observable<*>} hot observable of the channel
+     */
+    observe(topic, channel = kBroadcastChannel) {
+        return fromEvent(this._channels.get(channel), topic);
     }
 
     /**
