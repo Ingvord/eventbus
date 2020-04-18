@@ -3,20 +3,24 @@
  * @name
  * @desc Key word
  * @type {string}
+ * @private
  * @memberof Constants
  */
 const kSubscriptionKeyWord = "subscription";
 
 /**
  * @name
+ * @type {EventTarget}
  * @desc Default event target channel. Constant.
+ * @private
  * @memberof Constants
  */
 const kBroadcast = new EventTarget();
 
 /**
  * Channels map String->EventTarget
- *
+ * @class [ChannelsMap]
+ * @private
  */
 class ChannelsMap extends Map{
     constructor(){
@@ -31,8 +35,10 @@ class ChannelsMap extends Map{
 }
 
 /**
- * @name
+ * @constant
+ * @default
  * @desc
+ * @memberof Constants
  */
 const kBroadcastChannel = "channel:broadcast";
 
