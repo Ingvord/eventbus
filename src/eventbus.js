@@ -114,9 +114,9 @@ export class EventBus {
      * @param {string} channel
      */
     unsubscribe(event, cb, channel = kBroadcastChannel) {
-        const handler = this._callbacks.get(cb);
-        if (handler === undefined) return;
-        this._channels.get(channel).removeEventListener(event, handler);
-        this._callbacks.delete(cb);
+        if (this._callbacks.has(cb)) {
+            this._channels.get(channel).removeEventListener(event, this._callbacks.get(cb));
+            this._callbacks.delete(cb);
+        }
     }
 }
