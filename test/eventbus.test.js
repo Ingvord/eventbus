@@ -13,21 +13,3 @@ it('EventBus.subscribe by function', (done) => {
         data: "peanut butter"
     }, "test")
 });
-
-it('EventBus.subscribe by object', (done) => {
-    const bus = new EventBus();
-
-    const subscriber = new class {
-        "test1 subscription"(event) {
-            chai.expect(event.data).to.equal('peanut butter');
-            done();
-        }
-    }
-
-    bus.subscribe("test1", subscriber, "test");
-
-
-    bus.publish("test1", {
-        data: "peanut butter"
-    }, "test")
-});
