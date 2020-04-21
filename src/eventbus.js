@@ -72,15 +72,6 @@ export class EventBus {
             };
             this._channels.get(channel).addEventListener(event, handler);
             this._callbacks.set(cb, handler);
-        } else if (typeof cb == 'object') {
-            const handler = cb[`${event} ${kSubscriptionKeyWord}`];
-            if (handler === undefined)
-                throw new Error(`Callback object has no method handler for ${event}. Please define a method called "${event} ${kSubscriptionKeyWord}"`);
-            const handlerClosure = (msg) => {
-                handler.call(cb, msg.detail);
-            };
-            this._channels.get(channel).addEventListener(event, handlerClosure);
-            this._callbacks.set(cb, handlerClosure);
         } else {
             throw new Error(`Unsupported callback type ${typeof cb}. Must be either function or object`);
         }
