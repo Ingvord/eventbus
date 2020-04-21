@@ -42,6 +42,8 @@ class ChannelsMap extends Map{
  */
 const kBroadcastChannel = "channel:broadcast";
 
+export const kAnyTopic = '*';
+
 /**
  * @class [EventBus]
  */
@@ -58,11 +60,11 @@ export class EventBus {
 
     /**
      * @name
-     * @param {string} event
+     * @param {string} [event={@link kAnyTopic}] event
      * @param {function|object} cb
      * @param {string} channel
      */
-    subscribe(event, cb, channel = kBroadcastChannel) {
+    subscribe(event = kAnyTopic, cb, channel = kBroadcastChannel) {
         console.debug(typeof cb);
         if (typeof cb == 'function') {
             const handler = (msg) => {
@@ -86,22 +88,26 @@ export class EventBus {
 
     /**
      *
-     * @param {string} topic
+     * @param {string} [topic={@link kAnyTopic}] topic
      * @param {string} channel
      * @return {Observable<*>} hot observable of the channel
      */
-    observe(topic, channel = kBroadcastChannel) {
+    observe(topic = kAnyTopic, channel = kBroadcastChannel) {
         return fromEvent(this._channels.get(channel), topic);
     }
 
     /**
      * @name
-     * @param {string} event
+     * @param {string} [event={@link kAnyTopic}] event
      * @param {*} msg
      * @param {string} channel
      */
-    publish(event, msg, channel = kBroadcastChannel) {
-        this._channels.get(channel).dispatchEvent(new CustomEvent(event, {
+    publish(event = kAnyTopic, msg, channel = kBroadcastChannel) {
+        if (event != kAnyTopic)
+            this._channels.get(channel).dispatchEvent(new CustomEvent(event, {
+                detail: msg
+            }));
+        this._channels.get(channel).dispatchEvent(new CustomEvent(kAnyTopic, {
             detail: msg
         }));
     }
@@ -109,11 +115,11 @@ export class EventBus {
     /**
      * @name
      * @desc Does nothing if provided cb is not registered
-     * @param {string} event
+     * @param {string} [event={@link kAnyTopic}] event
      * @param {function|object} cb
      * @param {string} channel
      */
-    unsubscribe(event, cb, channel = kBroadcastChannel) {
+    unsubscribe(event = kAnyTopic, cb, channel = kBroadcastChannel) {
         if (this._callbacks.has(cb)) {
             this._channels.get(channel).removeEventListener(event, this._callbacks.get(cb));
             this._callbacks.delete(cb);
